@@ -1,1 +1,4 @@
-bro
+venv
+.env
+*__pycache__
+test_agent
