@@ -6,7 +6,7 @@ from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
 from requests import session
-from src.agents.pc_agent import pc_agent
+from src.pc_agent.pc_agent import pc_agent
 
 load_dotenv()
 
@@ -17,7 +17,7 @@ session_service_stateful = InMemorySessionService()
 initial_state = {   }
 
 # Create a NEW session
-APP_NAME = "AI agent"
+APP_NAME = "pc_agent"
 USER_ID = "1234"
 SESSION_ID = str(uuid.uuid4())
 
@@ -64,7 +64,7 @@ async def class_agent(userPrompt):
                 except Exception as e:
                     print(f"Error parsing output: {e}"),
 
-                print(output)
+                # print(output)
                 return output
         
 
