@@ -1,10 +1,10 @@
 from google.adk.agents import LiveRequestQueue, LiveRequest
 import asyncio
 import mss, mss.tools
-# In a new file: src/tools/pc_controller_tool.py
 import pyautogui
 
-async def stream_screen(input_stream):
+# This line is the critical fix:
+async def stream_screen(input_stream: LiveRequestQueue):
     """Stream screen frames to ADK agent."""
     with mss.mss() as sct:
         monitor = sct.monitors[1]
@@ -18,10 +18,11 @@ async def stream_screen(input_stream):
                 mime_type="image/png"
             )
 
-            await input_stream.put(LiveRequest(blob=blob))
+            # await input_stream.put
+            await input_stream.send_realtime(LiveRequest(blob=blob))
 
-            # keep coroutine alive
-            yield None  
+            # This "yield" is also critical
+            yield "Frame updated"  
             await asyncio.sleep(0.1)
 
 
